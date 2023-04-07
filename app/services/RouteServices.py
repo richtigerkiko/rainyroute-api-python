@@ -20,4 +20,5 @@ def GetWeatherRouteResponseObject(start: GeoCoordinate, destination:GeoCoordinat
     return None
 
 def MergePolylineCoordinatesWithOSRMAnnotation (geometry: str, annotation: Annotation) -> List[WeatherRoutePoint]:
+    
     pass
