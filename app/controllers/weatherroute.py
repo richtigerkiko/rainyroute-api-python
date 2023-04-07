@@ -20,5 +20,4 @@ def getWeatherRoute():
 
     responseObject = GetWeatherRouteResponseObject(parsedBody.CoordinatesStart, parsedBody.CoordinatesDestination, parsedBody.StartTime)
 
-    
     return "ok"

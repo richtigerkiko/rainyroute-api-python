@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import List
 
 from app.models.GeoCoordinate import GeoCoordinate
-from app.models.WeatherRoutePiont import WeatherRoutePoint
+from app.models.WeatherRoutePoint import WeatherRoutePoint
 
 
 @dataclass
