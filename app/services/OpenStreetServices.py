@@ -20,4 +20,4 @@ def GetOSRMApiResult (start:GeoCoordinate, destination:GeoCoordinate) -> ORSMApi
         
     parsedResponse = ORSMApiResult.from_dict(response.json())
     
-    pass
+    return parsedResponse
