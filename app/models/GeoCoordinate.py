@@ -1,13 +1,14 @@
 from dataclasses import dataclass
 import math
+from typing import Optional
 
 @dataclass
 class GeoCoordinate:
     Latitude: float
     Longitude: float
-    Altitude: float
-    Speed: float
-    Course: float
+    Altitude: Optional[float] = 0
+    Speed: Optional[float] = 0
+    Course: Optional[float] = 0
     
 
     # Calculates the distance between two geocoordinates. 

@@ -6,6 +6,7 @@ import json
 
 # https://json2csharp.com/code-converters/json-to-python MERCI!
 
+
 @dataclass
 class Astro:
     sunrise: str
@@ -29,14 +30,6 @@ class Astro:
         _is_sun_up = int(obj.get("is_sun_up"))
         return Astro(_sunrise, _sunset, _moonrise, _moonset, _moon_phase, _moon_illumination, _is_moon_up, _is_sun_up)
 
-@dataclass
-class Bulk:
-    query: Query
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Bulk':
-        _query = Query.from_dict(obj.get("query"))
-        return Bulk(_query)
 
 @dataclass
 class Condition:
@@ -50,6 +43,7 @@ class Condition:
         _icon = str(obj.get("icon"))
         _code = int(obj.get("code"))
         return Condition(_text, _icon, _code)
+
 
 @dataclass
 class Current:
@@ -104,6 +98,7 @@ class Current:
         _gust_kph = float(obj.get("gust_kph"))
         return Current(_last_updated_epoch, _last_updated, _temp_c, _temp_f, _is_day, _condition, _wind_mph, _wind_kph, _wind_degree, _wind_dir, _pressure_mb, _pressure_in, _precip_mm, _precip_in, _humidity, _cloud, _feelslike_c, _feelslike_f, _vis_km, _vis_miles, _uv, _gust_mph, _gust_kph)
 
+
 @dataclass
 class Day:
     maxtemp_c: float
@@ -151,31 +146,6 @@ class Day:
         _uv = float(obj.get("uv"))
         return Day(_maxtemp_c, _maxtemp_f, _mintemp_c, _mintemp_f, _avgtemp_c, _avgtemp_f, _maxwind_mph, _maxwind_kph, _totalprecip_mm, _totalprecip_in, _totalsnow_cm, _avgvis_km, _avgvis_miles, _avghumidity, _daily_will_it_rain, _daily_chance_of_rain, _daily_will_it_snow, _daily_chance_of_snow, _condition, _uv)
 
-@dataclass
-class Forecast:
-    forecastday: List[Forecastday]
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Forecast':
-        _forecastday = [Forecastday.from_dict(y) for y in obj.get("forecastday")]
-        return Forecast(_forecastday)
-
-@dataclass
-class Forecastday:
-    date: str
-    date_epoch: int
-    day: Day
-    astro: Astro
-    hour: List[Hour]
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Forecastday':
-        _date = str(obj.get("date"))
-        _date_epoch = int(obj.get("date_epoch"))
-        _day = Day.from_dict(obj.get("day"))
-        _astro = Astro.from_dict(obj.get("astro"))
-        _hour = [Hour.from_dict(y) for y in obj.get("hour")]
-        return Forecastday(_date, _date_epoch, _day, _astro, _hour)
 
 @dataclass
 class Hour:
@@ -250,6 +220,36 @@ class Hour:
         _uv = float(obj.get("uv"))
         return Hour(_time_epoch, _time, _temp_c, _temp_f, _is_day, _condition, _wind_mph, _wind_kph, _wind_degree, _wind_dir, _pressure_mb, _pressure_in, _precip_mm, _precip_in, _humidity, _cloud, _feelslike_c, _feelslike_f, _windchill_c, _windchill_f, _heatindex_c, _heatindex_f, _dewpoint_c, _dewpoint_f, _will_it_rain, _chance_of_rain, _will_it_snow, _chance_of_snow, _vis_km, _vis_miles, _gust_mph, _gust_kph, _uv)
 
+
+@dataclass
+class Forecastday:
+    date: str
+    date_epoch: int
+    day: Day
+    astro: Astro
+    hour: List[Hour]
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Forecastday':
+        _date = str(obj.get("date"))
+        _date_epoch = int(obj.get("date_epoch"))
+        _day = Day.from_dict(obj.get("day"))
+        _astro = Astro.from_dict(obj.get("astro"))
+        _hour = [Hour.from_dict(y) for y in obj.get("hour")]
+        return Forecastday(_date, _date_epoch, _day, _astro, _hour)
+
+
+@dataclass
+class Forecast:
+    forecastday: List[Forecastday]
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Forecast':
+        _forecastday = [Forecastday.from_dict(
+            y) for y in obj.get("forecastday")]
+        return Forecast(_forecastday)
+
+
 @dataclass
 class Location:
     name: str
@@ -273,6 +273,7 @@ class Location:
         _localtime = str(obj.get("localtime"))
         return Location(_name, _region, _country, _lat, _lon, _tz_id, _localtime_epoch, _localtime)
 
+
 @dataclass
 class Query:
     custom_id: str
@@ -290,14 +291,25 @@ class Query:
         _forecast = Forecast.from_dict(obj.get("forecast"))
         return Query(_custom_id, _q, _location, _current, _forecast)
 
+
 @dataclass
-class Root:
+class Bulk:
+    query: Query
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Bulk':
+        _query = Query.from_dict(obj.get("query"))
+        return Bulk(_query)
+
+
+@dataclass
+class WeatherApiBulkResponse:
     bulk: List[Bulk]
 
     @staticmethod
-    def from_dict(obj: Any) -> 'Root':
+    def from_dict(obj: Any) -> 'WeatherApiBulkResponse':
         _bulk = [Bulk.from_dict(y) for y in obj.get("bulk")]
-        return Root(_bulk)
+        return WeatherApiBulkResponse(_bulk)
 
 # Example Usage
 # jsonstring = json.loads(myjsonstring)

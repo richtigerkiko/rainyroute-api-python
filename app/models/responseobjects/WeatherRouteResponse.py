@@ -13,4 +13,5 @@ class WeatherRouteResponse:
     StartTime: datetime
     FinishTime: datetime
     WeatherRoutePoints: List[WeatherRoutePoint]
+    PolyLine:str
     
