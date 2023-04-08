@@ -6,9 +6,9 @@ from typing import Optional
 class GeoCoordinate:
     Latitude: float
     Longitude: float
-    Altitude: Optional[float] = 0
-    Speed: Optional[float] = 0
-    Course: Optional[float] = 0
+    Altitude: Optional[float] = 0.0
+    Speed: Optional[float] = 0.0
+    Course: Optional[float] = 0.0
     
 
     # Calculates the distance between two geocoordinates. 
@@ -37,3 +37,4 @@ class GeoCoordinate:
     
     def ToRadiants(deg: float):
         return deg * math.pi / 180
+    

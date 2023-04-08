@@ -73,6 +73,8 @@ class Current:
 
     @staticmethod
     def from_dict(obj: Any) -> 'Current':
+        if obj is None: return None
+        
         _last_updated_epoch = int(obj.get("last_updated_epoch"))
         _last_updated = str(obj.get("last_updated"))
         _temp_c = float(obj.get("temp_c"))
@@ -186,7 +188,7 @@ class Hour:
     @staticmethod
     def from_dict(obj: Any) -> 'Hour':
         _time_epoch = int(obj.get("time_epoch"))
-        _time = datetime.strptime(str(obj.get("time"), "yyy-MM-dd HH:mm"))
+        _time = datetime.strptime(obj.get("time"), '%Y-%m-%d %H:%M')
         _temp_c = float(obj.get("temp_c"))
         _temp_f = float(obj.get("temp_f"))
         _is_day = int(obj.get("is_day"))
@@ -263,9 +265,11 @@ class Location:
 
     @staticmethod
     def from_dict(obj: Any) -> 'Location':
-        _name = str(obj.get("name"))
-        _region = str(obj.get("region"))
-        _country = str(obj.get("country"))
+        if obj is None:
+            return None
+        _name = obj.get("name")
+        _region = obj.get("region")
+        _country = obj.get("country")
         _lat = float(obj.get("lat"))
         _lon = float(obj.get("lon"))
         _tz_id = str(obj.get("tz_id"))
@@ -276,7 +280,7 @@ class Location:
 
 @dataclass
 class Query:
-    custom_id: str
+    custom_id: int
     q: str
     location: Location
     current: Current
@@ -284,7 +288,7 @@ class Query:
 
     @staticmethod
     def from_dict(obj: Any) -> 'Query':
-        _custom_id = str(obj.get("custom_id"))
+        _custom_id = int(obj.get("custom_id"))
         _q = str(obj.get("q"))
         _location = Location.from_dict(obj.get("location"))
         _current = Current.from_dict(obj.get("current"))

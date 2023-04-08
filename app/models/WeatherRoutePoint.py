@@ -6,6 +6,7 @@ from app.models.GeoCoordinate import GeoCoordinate
 from app.models.responseobjects.externalapiresponse.WeatherApiBulkResponse import Hour
 
 
+@dataclass
 class WeatherRoutePoint:
     def __init__(self, Coordinates: GeoCoordinate, DistanceFromLastPoint: float,
                  DurationFromLastPoint: float, WeatherForecastAtDuration: Optional[Hour],
@@ -32,8 +33,8 @@ class WeatherRoutePoint:
         
         dateTimeAtDuration = routeStartDate + timedelta(seconds=self.TotalDuration)
 
-        weatherAtDuration = list(
-            filter(lambda x: x.time.hour == dateTimeAtDuration.hour, weatherForeCast))[0]
+        weatherAtDuration = next(
+            filter(lambda x: x.time.hour == dateTimeAtDuration.hour, weatherForeCast), None)
 
         self.WeatherForecastAtDuration = weatherAtDuration
         self.CompleteForecast = weatherForeCast
